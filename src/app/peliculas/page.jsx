@@ -36,6 +36,7 @@ export default function Home() {
       ) : (
         <>
           <MovieList movies={movies} />
+          
           <div className="mt-6 flex justify gap-4">
             <button 
               onClick={() => setPage(prev => prev > 1 ? prev - 1 : 1)} 

@@ -12,7 +12,7 @@ export default function MovieCard({ movie }) {
   const handleVote = (voteType) => {
     if (userVote === voteType) {
       setUserVote(null);
-      if (voteType === 'like') {
+      if (voteType === 'like ') {
         setLikes(prev => prev - 1);
       } else {
         setDislikes(prev => prev - 1);
