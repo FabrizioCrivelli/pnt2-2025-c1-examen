@@ -7,23 +7,28 @@ export default function Home() {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const pageSize = 20;
 
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const response = await fetch(`https://mflixbackend.azurewebsites.net/api/movies?pageSize=10&page=${page}`);
+        const response = await fetch(`https://mflixbackend.azurewebsites.net/api/movies?pageSize=20&page=${page}`);
+        if (!response.ok) {
+          throw new Error('Hubo un error al cargar las películas');
+        }
         const data = await response.json();
         setMovies(data);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching movies:', error);
+        console.error('Error al cargar las películas:', error);
         setLoading(false);
       }
     }
-
+    setLoading(true);
     fetchMovies();
   }, [page]);
 
+  
   return (
     <main className="container mx-auto p-4">      
       {loading ? (
@@ -31,7 +36,7 @@ export default function Home() {
       ) : (
         <>
           <MovieList movies={movies} />
-          <div className="flex justify-center items-center mt-4 space-x-4">
+          <div className="mt-6 flex justify gap-4">
             <button 
               onClick={() => setPage(prev => prev > 1 ? prev - 1 : 1)} 
               disabled={page === 1}
